@@ -15,6 +15,8 @@ app.post("/", function (req, res) {
   var firstName = req.body.fName;
   var lasttName = req.body.lName;
   var email = req.body.email;
+
+  console.log(firstName, lasttName, email);
 });
 
 app.listen(3000, function () {
