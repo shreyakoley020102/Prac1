@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
+const https = require("https");
 
 const app = express();
 
@@ -12,11 +13,37 @@ app.get("/", function (req, res) {
 });
 
 app.post("/", function (req, res) {
-  var firstName = req.body.fName;
-  var lasttName = req.body.lName;
-  var email = req.body.email;
+  const firstName = req.body.fName;
+  const lasttName = req.body.lName;
+  const email = req.body.email;
 
-  console.log(firstName, lasttName, email);
+  const data = {
+    members: [
+      {
+        email_address: email,
+        status: "subscribed",
+        merge_fields: {
+          FNAME: firstName,
+          LNAME: lasttName,
+        },
+      },
+    ],
+  };
+
+  const jsonData = JSON.stringify(data);
+
+  const url = "https://us6.api.mailchimp.com/3.0/lists/361d4341fc";
+
+  const options = {
+    method: "POST",
+    auth: "shreya02:860158c399b139931baf9a6b9f94173f-us6",
+  };
+
+  https.request(url, options, function (response) {
+    response.on("data", function (data) {
+      console.log(JSON.parse(data));
+    });
+  });
 });
 
 app.listen(3000, function () {
@@ -24,7 +51,7 @@ app.listen(3000, function () {
 });
 
 //API KEY
-//e8fdbb14eb5c0c880dc96d329aba473f - us6;
+//860158c399b139931baf9a6b9f94173f-us6
 
 //List id
 //361d4341fc
