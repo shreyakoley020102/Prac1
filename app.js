@@ -39,11 +39,14 @@ app.post("/", function (req, res) {
     auth: "shreya02:860158c399b139931baf9a6b9f94173f-us6",
   };
 
-  https.request(url, options, function (response) {
+  const request = https.request(url, options, function (response) {
     response.on("data", function (data) {
       console.log(JSON.parse(data));
     });
   });
+
+  request.write(jsonData);
+  request.end();
 });
 
 app.listen(3000, function () {
