@@ -36,10 +36,17 @@ app.post("/", function (req, res) {
 
   const options = {
     method: "POST",
-    auth: "shreya02:860158c399b139931baf9a6b9f94173f-us6",
+    auth: "shreya02:550f297056d7a883329337ec8266d31-us6",
+    //add 1 before -us6, basically 311
   };
 
   const request = https.request(url, options, function (response) {
+    if (response.statusCode === 200) {
+      res.sendFile(__dirname + "/success.html");
+    } else {
+      res.sendFile(__dirname + "/failure.html");
+    }
+
     response.on("data", function (data) {
       console.log(JSON.parse(data));
     });
@@ -47,6 +54,10 @@ app.post("/", function (req, res) {
 
   request.write(jsonData);
   request.end();
+});
+
+app.post("/failure", function (req, res) {
+  res.redirect("/");
 });
 
 app.listen(3000, function () {
