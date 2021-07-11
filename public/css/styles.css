@@ -53,3 +53,10 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+img {
+  vertical-align: middle;
+  width: 180px;
+  aspect-ratio: auto 72 / 72;
+  height: 180px;
+}
